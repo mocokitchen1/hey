@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div>
+                <h1 class="text-3xl font-serif font-bold text-gray-900 mb-6">Get in Touch</h1>
+                <p class="text-gray-600 mb-8 text-lg">Have a question about our products or bulk orders? Reach out through any of our channels.</p>
+                
+                <div class="space-y-6">
+                    <a href="https://wa.me/27123456789" class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                        <i data-lucide="message-circle" class="w-6 h-6 text-green-600 mr-4"></i>
+                        <div>
+                            <p class="text-sm font-bold text-green-800 uppercase tracking-widest">WhatsApp</p>
+                            <p class="text-lg text-gray-700 font-medium">+27 12 345 6789</p>
+                        </div>
+                    </a>
+                    <div class="flex items-center p-4 bg-amber-50 rounded-lg">
+                        <i data-lucide="phone" class="w-6 h-6 text-primary mr-4"></i>
+                        <div>
+                            <p class="text-sm font-bold text-primary uppercase tracking-widest">Phone</p>
+                            <p class="text-lg text-gray-700 font-medium">+27 12 345 6789</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 bg-blue-50 rounded-lg">
+                        <i data-lucide="mail" class="w-6 h-6 text-blue-600 mr-4"></i>
+                        <div>
+                            <p class="text-sm font-bold text-blue-800 uppercase tracking-widest">Email</p>
+                            <p class="text-lg text-gray-700 font-medium">hello@mvelase.co.za</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-gray-600 mr-4"></i>
+                        <div>
+                            <p class="text-sm font-bold text-gray-800 uppercase tracking-widest">Location</p>
+                            <p class="text-lg text-gray-700 font-medium">Pietermaritzburg, KwaZulu-Natal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Bank Details (EFT)</h2>
+                <div class="space-y-4 p-6 bg-cream rounded-xl border-2 border-dashed border-amber-200">
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Bank Name</p>
+                        <p class="text-lg font-bold text-gray-900">First National Bank (FNB)</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Account Name</p>
+                        <p class="text-lg font-bold text-gray-900">Mvelase Pinafore Collection</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Account Number</p>
+                        <p class="text-lg font-bold text-gray-900">62849302194</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Branch Code</p>
+                        <p class="text-lg font-bold text-gray-900">250655</p>
+                    </div>
+                    <p class="text-sm text-amber-800 pt-4 font-medium italic">Please use your Order ID as payment reference.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

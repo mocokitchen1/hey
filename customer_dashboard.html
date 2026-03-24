@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        secondary: '#065F46',
+                        accent: '#F59E0B',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <!-- Customer Login -->
+        <div id="customer-login-section" class="max-w-md mx-auto py-20">
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2 text-center">My Orders</h1>
+                <p class="text-sm text-gray-500 text-center mb-6">Enter your details to view your order history.</p>
+                <form id="customer-login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="cust-email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm p-3 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Order ID (Recent)</label>
+                        <input type="text" id="cust-order-id" required placeholder="e.g. MVE-12345" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm p-3 border">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-primary hover:bg-amber-800 focus:outline-none font-bold">
+                        View My Dashboard
+                    </button>
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <p class="text-xs font-bold text-blue-800 uppercase tracking-widest mb-2">How to Login</p>
+                        <p class="text-xs text-blue-700 leading-relaxed">
+                            Use the <strong>email address</strong> and <strong>Order ID</strong> (e.g., MVE-12345) from your confirmation email. 
+                            <br><br>
+                            <span class="italic font-medium">New customer? Place an order in the Shop to create your dashboard access.</span>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="customer-panel" class="hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-serif font-bold text-gray-900">Welcome Back, <span id="display-name">Customer</span></h1>
+                    <p class="text-gray-500" id="display-email"></p>
+                </div>
+                <button onclick="customerLogout()" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-bold text-gray-700 hover:bg-gray-50">Logout</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Total Orders</p>
+                    <p id="cust-stat-orders" class="text-3xl font-bold text-primary">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Items Purchased</p>
+                    <p id="cust-stat-items" class="text-3xl font-bold text-secondary">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border shadow-sm">
+                    <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Last Order Status</p>
+                    <p id="cust-stat-status" class="text-xl font-bold text-accent">N/A</p>
+                </div>
+            </div>
+
+            <!-- Order History Table -->
+            <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-bold text-gray-900">Your Order History</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Order ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Items</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-orders-list" class="bg-white divide-y divide-gray-200">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="bg-white p-6 rounded-xl border shadow-sm">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Saved Delivery Information</h2>
+                <div id="customer-info-display" class="space-y-2 text-sm text-gray-600">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+    <script>
+        let currentCustomer = null;
+
+        function checkCustomerAuth() {
+            const saved = JSON.parse(localStorage.getItem('mvelase_customer_session'));
+            if (saved) {
+                currentCustomer = saved;
+                document.getElementById('customer-login-section').classList.add('hidden');
+                document.getElementById('customer-panel').classList.remove('hidden');
+                refreshCustomerDashboard();
+            }
+        }
+
+        document.getElementById('customer-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('cust-email').value.toLowerCase();
+            const orderId = document.getElementById('cust-order-id').value.toUpperCase();
+
+            const orders = getOrders();
+            const order = orders.find(o => o.customer.email.toLowerCase() === email && o.id === orderId);
+
+            if (order) {
+                currentCustomer = { email: email, name: order.customer.name };
+                localStorage.setItem('mvelase_customer_session', JSON.stringify(currentCustomer));
+                addLog('Customer Auth', `Customer ${order.customer.name} accessed dashboard`, 'info');
+                checkCustomerAuth();
+            } else {
+                alert('No order found with those details. Please check your email and order ID.');
+            }
+        });
+
+        function customerLogout() {
+            addLog('Customer Auth', 'Customer logged out', 'info');
+            localStorage.removeItem('mvelase_customer_session');
+            window.location.reload();
+        }
+
+        function refreshCustomerDashboard() {
+            const orders = getOrders().filter(o => o.customer.email.toLowerCase() === currentCustomer.email);
+            
+            document.getElementById('display-name').innerText = currentCustomer.name;
+            document.getElementById('display-email').innerText = currentCustomer.email;
+            document.getElementById('cust-stat-orders').innerText = orders.length;
+            
+            let totalItems = 0;
+            orders.forEach(o => totalItems += o.items.reduce((a, b) => a + b.qty, 0));
+            document.getElementById('cust-stat-items').innerText = totalItems;
+            
+            if (orders.length > 0) {
+                const lastOrder = orders[orders.length - 1];
+                document.getElementById('cust-stat-status').innerText = lastOrder.status;
+                
+                // Info Display
+                document.getElementById('customer-info-display').innerHTML = `
+                    <p><strong>Phone:</strong> ${lastOrder.customer.phone}</p>
+                    <p><strong>Address:</strong> ${lastOrder.customer.address}</p>
+                    <p class="mt-4 italic text-xs text-gray-400">Information is pulled from your most recent order.</p>
+                `;
+            }
+
+            const list = document.getElementById('customer-orders-list');
+            list.innerHTML = orders.slice().reverse().map(order => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">${order.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.date}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        ${order.items.map(i => `<div class="truncate max-w-[150px]">${i.qty}x ${i.name}</div>`).join('')}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-primary">${order.total}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase ${getStatusColorClass(order.status)}">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="viewOrderDetails('${order.id}')" class="text-primary hover:text-amber-900">View Details</button>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function getStatusColorClass(status) {
+            if (status === 'Processing') return 'bg-blue-100 text-blue-800';
+            if (status === 'Shipped') return 'bg-amber-100 text-amber-800';
+            return 'bg-green-100 text-green-800';
+        }
+
+        function viewOrderDetails(id) {
+            const orders = getOrders();
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                alert(`Order ID: ${id}\nDate: ${order.date}\n\nStatus: ${order.status}\nDelivery: ${order.delivery.toUpperCase()}\n\nItems:\n${order.items.map(i => `- ${i.qty}x ${i.name} (${i.color}, ${i.size})`).join('\n')}\n\nTotal: ${order.total}`);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkCustomerAuth);
+    </script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mvelase CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        secondary: '#065F46',
+                        accent: '#F59E0B',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <!-- Login Section -->
+        <div id="admin-login-section" class="max-w-md mx-auto py-20">
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin CRM Login</h1>
+                <form id="admin-login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" id="admin-user" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm p-3 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="admin-pass" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm p-3 border">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-primary hover:bg-amber-800 focus:outline-none font-bold">
+                        Login to CRM
+                    </button>
+                    <div class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100">
+                        <p class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-2">Demo Credentials</p>
+                        <p class="text-sm text-amber-700"><strong>Username:</strong> admin</p>
+                        <p class="text-sm text-amber-700"><strong>Password:</strong> mvelase2024</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="admin-panel" class="hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <h1 class="text-3xl font-serif font-bold text-gray-900">Mvelase CRM Dashboard</h1>
+                <div class="flex space-x-2">
+                    <button onclick="exportData()" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> Export CSV
+                    </button>
+                    <button onclick="adminLogout()" class="px-4 py-2 bg-red-50 text-red-600 rounded-md text-sm font-bold hover:bg-red-100">Logout</button>
+                </div>
+            </div>
+
+            <!-- CRM Navigation -->
+            <div class="flex border-b border-gray-200 overflow-x-auto">
+                <button onclick="showTab('orders')" class="crm-tab active px-6 py-3 text-sm font-medium text-primary border-b-2 border-primary whitespace-nowrap">Orders</button>
+                <button onclick="showTab('customers')" class="crm-tab px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary whitespace-nowrap">Customers</button>
+                <button onclick="showTab('inventory')" class="crm-tab px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary whitespace-nowrap">Inventory</button>
+                <button onclick="showTab('analytics')" class="crm-tab px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary whitespace-nowrap">Analytics</button>
+                <button onclick="showTab('logs')" class="crm-tab px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary whitespace-nowrap">System Logs</button>
+            </div>
+
+            <!-- Stats & Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Stats -->
+                <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Total Orders</p>
+                        <p id="stat-orders" class="text-3xl font-bold text-primary">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Total Revenue</p>
+                        <p id="stat-revenue" class="text-3xl font-bold text-accent">R0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <p class="text-gray-500 text-sm uppercase font-bold tracking-widest">Active Customers</p>
+                        <p id="stat-customers" class="text-3xl font-bold text-secondary">0</p>
+                    </div>
+                </div>
+                <!-- Quick Actions -->
+                <div class="bg-primary text-white p-6 rounded-xl shadow-lg">
+                    <h3 class="font-bold mb-4 flex items-center">
+                        <i data-lucide="zap" class="w-4 h-4 mr-2"></i> Quick Actions
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="showTab('inventory')" class="w-full text-left text-sm p-2 hover:bg-amber-800 rounded transition-colors flex items-center">
+                            <i data-lucide="package" class="w-4 h-4 mr-2"></i> Update Stock
+                        </button>
+                        <button onclick="showTab('orders')" class="w-full text-left text-sm p-2 hover:bg-amber-800 rounded transition-colors flex items-center">
+                            <i data-lucide="truck" class="w-4 h-4 mr-2"></i> View New Orders
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Orders -->
+            <div id="tab-orders" class="crm-content">
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="p-6 border-b flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <h2 class="text-xl font-bold text-gray-900">Order Management</h2>
+                        <div class="relative w-full sm:w-64">
+                            <input type="text" id="order-search" oninput="filterOrders(this.value)" placeholder="Search Order ID or Name..." class="w-full text-sm border rounded-md pl-10 pr-3 py-2 focus:ring-primary focus:border-primary">
+                            <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Order ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Customer</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Details</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-list" class="bg-white divide-y divide-gray-200">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Customers -->
+            <div id="tab-customers" class="crm-content hidden">
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h2 class="text-xl font-bold text-gray-900">Customer Database</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Contact</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Orders</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Total Spent</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Quick Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-list" class="bg-white divide-y divide-gray-200">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Inventory -->
+            <div id="tab-inventory" class="crm-content hidden">
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h2 class="text-xl font-bold text-gray-900">Stock Management</h2>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8" id="inventory-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Analytics -->
+            <div id="tab-analytics" class="crm-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Revenue Chart -->
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-4">Revenue Breakdown</h3>
+                        <canvas id="revenueChart" height="200"></canvas>
+                    </div>
+                    <!-- Order Status Chart -->
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-4">Order Status Distribution</h3>
+                        <canvas id="statusChart" height="200"></canvas>
+                    </div>
+                    <!-- Popular Colors Chart -->
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-4">Top Colors</h3>
+                        <canvas id="colorChart" height="200"></canvas>
+                    </div>
+                    <!-- Payment Methods -->
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-4">Payment Methods</h3>
+                        <canvas id="paymentChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: System Logs -->
+            <div id="tab-logs" class="crm-content hidden">
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-900">Website Activity Logs</h2>
+                        <button onclick="clearLogs()" class="text-xs text-red-600 font-bold hover:underline">Clear History</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Timestamp</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Action</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Details</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-list" class="bg-white divide-y divide-gray-200 font-mono text-[11px]">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+    <script>
+        let revenueChart, statusChart, colorChart, paymentChart;
+
+        // Authentication Check
+        function checkAuth() {
+            if (isAdminLoggedIn) {
+                document.getElementById('admin-login-section').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                refreshCRM();
+            }
+        }
+
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            if (user === 'admin' && pass === 'mvelase2024') {
+                isAdminLoggedIn = true;
+                localStorage.setItem('mvelase_admin_auth', 'true');
+                addLog('Admin Auth', 'Successful administrator login', 'success');
+                checkAuth();
+            } else {
+                alert('Invalid credentials.');
+            }
+        });
+
+        function adminLogout() {
+            addLog('Admin Auth', 'Administrator logged out', 'info');
+            isAdminLoggedIn = false;
+            localStorage.setItem('mvelase_admin_auth', 'false');
+            document.getElementById('admin-login-section').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.crm-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.crm-tab').forEach(t => {
+                t.classList.remove('active', 'text-primary', 'border-b-2', 'border-primary');
+                t.classList.add('text-gray-500');
+                if (t.innerText.toLowerCase() === tabName) {
+                    t.classList.add('active', 'text-primary', 'border-b-2', 'border-primary');
+                    t.classList.remove('text-gray-500');
+                }
+            });
+            if (tabName === 'analytics') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        function refreshCRM() {
+            const orders = getOrders();
+            const inventory = getInventory();
+            
+            // Update Stats
+            document.getElementById('stat-orders').innerText = orders.length;
+            
+            const uniqueEmails = [...new Set(orders.map(o => o.customer.email))];
+            document.getElementById('stat-customers').innerText = uniqueEmails.length;
+            
+            let totalRevenue = 0;
+            orders.forEach(o => {
+                const val = parseFloat(o.total.replace('R', ''));
+                if (!isNaN(val)) totalRevenue += val;
+            });
+            document.getElementById('stat-revenue').innerText = `R${totalRevenue.toFixed(2)}`;
+
+            // Render Orders
+            renderOrders(orders);
+            // Render Customers
+            renderCustomers(orders);
+            // Render Inventory
+            renderInventory(inventory);
+            // Render Logs
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const logs = getSystemLogs();
+            const list = document.getElementById('logs-list');
+            if (logs.length === 0) {
+                list.innerHTML = '<tr><td colspan="4" class="px-6 py-10 text-center text-gray-400 italic">No activity logs found.</td></tr>';
+                return;
+            }
+
+            list.innerHTML = logs.map(log => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-3 whitespace-nowrap text-gray-500">${log.timestamp}</td>
+                    <td class="px-6 py-3 whitespace-nowrap font-bold text-gray-700">${log.action}</td>
+                    <td class="px-6 py-3 text-gray-600">${log.details}</td>
+                    <td class="px-6 py-3 whitespace-nowrap">
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${getLogTypeClass(log.type)}">
+                            ${log.type}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getLogTypeClass(type) {
+            switch(type) {
+                case 'success': return 'bg-green-100 text-green-800';
+                case 'warning': return 'bg-amber-100 text-amber-800';
+                case 'error': return 'bg-red-100 text-red-800';
+                default: return 'bg-blue-100 text-blue-800';
+            }
+        }
+
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear all system logs?')) {
+                localStorage.removeItem('mvelase_system_logs');
+                addLog('Logs Cleared', 'Admin cleared the system activity history', 'warning');
+                refreshCRM();
+            }
+        }
+
+        function renderOrders(orders) {
+            const list = document.getElementById('orders-list');
+            if (orders.length === 0) {
+                list.innerHTML = '<tr><td colspan="6" class="px-6 py-10 text-center text-gray-400 italic">No orders found.</td></tr>';
+                return;
+            }
+
+            list.innerHTML = orders.slice().reverse().map(order => `
+                <tr class="hover:bg-gray-50 order-row" data-search="${order.id} ${order.customer.name}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">${order.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${order.customer.name}</div>
+                        <div class="text-xs text-gray-500">${order.customer.phone}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        <div class="truncate max-w-[150px]">${order.items.length} items (${order.items.map(i => i.qty).reduce((a,b)=>a+b,0)} qty)</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-primary">${order.total}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <select onchange="updateOrderStatus('${order.id}', this.value)" class="text-xs font-bold rounded-full px-2 py-1 border-none focus:ring-0 ${getStatusColorClass(order.status)}">
+                            <option value="Processing" ${order.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                            <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                            <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="viewOrderDetails('${order.id}')" class="text-primary hover:text-amber-900 mr-3">Details</button>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function filterOrders(val) {
+            const query = val.toLowerCase();
+            document.querySelectorAll('.order-row').forEach(row => {
+                const searchData = row.getAttribute('data-search').toLowerCase();
+                row.style.display = searchData.includes(query) ? '' : 'none';
+            });
+        }
+
+        function renderCustomers(orders) {
+            const customersMap = {};
+            orders.forEach(o => {
+                const email = o.customer.email;
+                if (!customersMap[email]) {
+                    customersMap[email] = {
+                        name: o.customer.name,
+                        email: email,
+                        phone: o.customer.phone,
+                        orderCount: 0,
+                        totalSpent: 0
+                    };
+                }
+                customersMap[email].orderCount++;
+                const val = parseFloat(o.total.replace('R', ''));
+                if (!isNaN(val)) customersMap[email].totalSpent += val;
+            });
+
+            const list = document.getElementById('customers-list');
+            const customers = Object.values(customersMap);
+            
+            list.innerHTML = customers.map(c => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${c.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${c.phone}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${c.orderCount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-primary">R${c.totalSpent.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <a href="https://wa.me/${c.phone.replace(/\s+/g, '')}" target="_blank" class="text-green-600 hover:text-green-800 flex items-center justify-end">
+                            <i data-lucide="message-circle" class="w-4 h-4 mr-1"></i> WhatsApp
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderInventory(inventory) {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = inventory.map(item => `
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg">${item.name}</h3>
+                        <span class="text-sm font-bold ${item.stock < 10 ? 'text-red-600 animate-pulse' : 'text-green-600'}">
+                            Stock: ${item.stock}
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="number" id="stock-val-${item.id}" value="${item.stock}" class="w-20 border rounded px-2 py-1 text-sm">
+                        <button onclick="updateStock('${item.id}')" class="px-3 py-1 bg-primary text-white text-sm rounded hover:bg-amber-800">Update</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initCharts() {
+            const orders = getOrders();
+            const colors = {};
+            const statuses = { 'Processing': 0, 'Shipped': 0, 'Delivered': 0 };
+            const payments = {};
+            let dailyRev = {};
+
+            orders.forEach(o => {
+                statuses[o.status]++;
+                payments[o.payment] = (payments[o.payment] || 0) + 1;
+                const rev = parseFloat(o.total.replace('R', ''));
+                dailyRev[o.date] = (dailyRev[o.date] || 0) + rev;
+                o.items.forEach(i => {
+                    colors[i.color] = (colors[i.color] || 0) + i.qty;
+                });
+            });
+
+            // Destroy existing charts if any
+            if (revenueChart) revenueChart.destroy();
+            if (statusChart) statusChart.destroy();
+            if (colorChart) colorChart.destroy();
+            if (paymentChart) paymentChart.destroy();
+
+            const ctx1 = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(dailyRev),
+                    datasets: [{
+                        label: 'Daily Revenue (R)',
+                        data: Object.values(dailyRev),
+                        borderColor: '#B45309',
+                        tension: 0.1,
+                        fill: true,
+                        backgroundColor: 'rgba(180, 83, 9, 0.1)'
+                    }]
+                }
+            });
+
+            const ctx2 = document.getElementById('statusChart').getContext('2d');
+            statusChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statuses),
+                    datasets: [{
+                        data: Object.values(statuses),
+                        backgroundColor: ['#3B82F6', '#F59E0B', '#10B981']
+                    }]
+                }
+            });
+
+            const ctx3 = document.getElementById('colorChart').getContext('2d');
+            colorChart = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(colors),
+                    datasets: [{
+                        label: 'Qty Sold',
+                        data: Object.values(colors),
+                        backgroundColor: '#065F46'
+                    }]
+                }
+            });
+
+            const ctx4 = document.getElementById('paymentChart').getContext('2d');
+            paymentChart = new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(payments).map(k => k.toUpperCase()),
+                    datasets: [{
+                        data: Object.values(payments),
+                        backgroundColor: ['#8B5CF6', '#EC4899']
+                    }]
+                }
+            });
+        }
+
+        function updateStock(id) {
+            const newVal = parseInt(document.getElementById(`stock-val-${id}`).value);
+            const inventory = getInventory();
+            const item = inventory.find(i => i.id === id);
+            if (item) {
+                item.stock = newVal;
+                saveInventory(inventory);
+                addLog('Stock Update', `Inventory for ${item.name} updated to ${newVal}`, 'info');
+                refreshCRM();
+                showToast(`Stock updated for ${item.name}`);
+            }
+        }
+
+        function updateOrderStatus(id, newStatus) {
+            const orders = getOrders();
+            const index = orders.findIndex(o => o.id === id);
+            if (index !== -1) {
+                orders[index].status = newStatus;
+                saveOrders(orders);
+                addLog('Order Update', `Order ${id} status changed to ${newStatus}`, 'success');
+                refreshCRM();
+                showToast(`Order ${id}: ${newStatus}`);
+            }
+        }
+
+        function getStatusColorClass(status) {
+            if (status === 'Processing') return 'bg-blue-100 text-blue-800';
+            if (status === 'Shipped') return 'bg-amber-100 text-amber-800';
+            return 'bg-green-100 text-green-800';
+        }
+
+        function viewOrderDetails(id) {
+            const orders = getOrders();
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                alert(`Order ID: ${id}\n\nDelivery: ${order.delivery.toUpperCase()}\nAddress: ${order.customer.address}\nItems: ${order.items.map(i => `${i.qty}x ${i.name} (${i.color})`).join(', ')}\nNotes: ${order.customer.notes || 'None'}`);
+            }
+        }
+
+        function exportData() {
+            const orders = getOrders();
+            if (orders.length === 0) return alert('No data to export.');
+            let csv = 'Order ID,Date,Customer,Email,Total,Status\n';
+            orders.forEach(o => csv += `${o.id},${o.date},"${o.customer.name}",${o.customer.email},${o.total},${o.status}\n`);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'mvelase_orders.csv');
+            a.click();
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>

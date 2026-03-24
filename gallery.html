@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-serif font-bold text-gray-900">Our Craftsmanship</h1>
+            <p class="mt-4 text-gray-600">A showcase of our handmade aprons, crafted in KwaZulu-Natal.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Gallery Item 1 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-amber-50 flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="shirt" class="w-32 h-32 text-primary opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Basic Earth Brown</h3>
+                    <p class="text-sm text-gray-600">Our classic design, crafted for daily use and durability.</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-green-50 flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="sparkles" class="w-32 h-32 text-secondary opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Premium Forest Green</h3>
+                    <p class="text-sm text-gray-600">Enhanced comfort with extra pockets and adjustable straps.</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-blue-50 flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="award" class="w-32 h-32 text-blue-900 opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Special Midnight Blue</h3>
+                    <p class="text-sm text-gray-600">Exclusive color for our premium collection customers.</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-amber-50 flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="package" class="w-32 h-32 text-primary opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Bulk Orders</h3>
+                    <p class="text-sm text-gray-600">We handle large orders for businesses and events across South Africa.</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 5 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-cream flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="scissors" class="w-32 h-32 text-primary opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Handmade Process</h3>
+                    <p class="text-sm text-gray-600">Every piece is hand-stitched by local artisans in KZN.</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 6 -->
+            <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                <div class="aspect-w-1 aspect-h-1 bg-gray-50 flex items-center justify-center p-12 group-hover:opacity-75 transition-opacity">
+                    <i data-lucide="smile" class="w-32 h-32 text-gray-400 opacity-20"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Customer Satisfaction</h3>
+                    <p class="text-sm text-gray-600">Our quality reflects in our repeat customers and community support.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center">
+            <h3 class="text-2xl font-serif font-bold text-gray-900 mb-6">Want to see more?</h3>
+            <a href="shop.html" class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-primary hover:bg-amber-800 transition-colors">
+                Visit our Shop
+            </a>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

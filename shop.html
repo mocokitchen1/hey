@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        secondary: '#065F46',
+                        accent: '#F59E0B',
+                        cream: '#FFFBEB',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-serif font-bold text-gray-900 mb-8">Our Shop</h1>
+        
+        <div class="grid grid-cols-1 gap-12">
+            <!-- Basic Apron -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden md:flex">
+                <div class="md:w-1/3 bg-gray-50 flex items-center justify-center p-8">
+                    <i data-lucide="shirt" class="w-32 h-32 text-gray-300"></i>
+                </div>
+                <div class="p-8 md:w-2/3">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Basic Apron</h2>
+                            <p class="text-primary font-bold text-xl mt-1">R80.00</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded uppercase">In Stock</span>
+                    </div>
+                    <p class="mt-4 text-gray-600">Our classic handmade apron. Durable, lightweight, and perfect for daily use. Made with high-quality local materials.</p>
+                    
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Size</label>
+                            <select id="basic-size" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                                <option>Small</option>
+                                <option selected>Medium</option>
+                                <option>Large</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Color</label>
+                            <select id="basic-color" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                                <option>Natural</option>
+                                <option>Earth Brown</option>
+                                <option>Sunset Orange</option>
+                                <option>Forest Green</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Quantity</label>
+                            <input type="number" id="basic-qty" min="1" value="1" class="mt-1 block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex items-center justify-between">
+                        <div class="text-sm text-gray-500 italic">
+                            <i data-lucide="tag" class="w-4 h-4 inline mr-1"></i>
+                            Bulk deal: 10 for R700
+                        </div>
+                        <button onclick="addToCart('Basic Apron', 80, 'basic')" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Apron -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden md:flex">
+                <div class="md:w-1/3 bg-amber-50 flex items-center justify-center p-8">
+                    <i data-lucide="sparkles" class="w-32 h-32 text-amber-300"></i>
+                </div>
+                <div class="p-8 md:w-2/3">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Premium Apron</h2>
+                            <p class="text-primary font-bold text-xl mt-1">R150.00</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded uppercase">Bestseller</span>
+                    </div>
+                    <p class="mt-4 text-gray-600">Our finest work. Features reinforced stitching, adjustable neck straps, and extra pockets for convenience. Exceptional comfort for long-duration wear.</p>
+                    
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Size</label>
+                            <select id="premium-size" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                                <option>Small</option>
+                                <option selected>Medium</option>
+                                <option>Large</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Color</label>
+                            <select id="premium-color" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                                <option>Natural</option>
+                                <option>Earth Brown</option>
+                                <option>Sunset Orange</option>
+                                <option>Forest Green</option>
+                                <option>Midnight Blue</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Quantity</label>
+                            <input type="number" id="premium-qty" min="1" value="1" class="mt-1 block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md border">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex items-center justify-between">
+                        <div class="text-sm text-gray-500 italic">
+                            <i data-lucide="info" class="w-4 h-4 inline mr-1"></i>
+                            Premium fabric quality
+                        </div>
+                        <button onclick="addToCart('Premium Apron', 150, 'premium')" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

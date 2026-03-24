@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mvelase Pinafore Collection - Handmade KZN Aprons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309', // Warm amber-brown
+                        secondary: '#065F46', // Deep emerald
+                        accent: '#F59E0B', // Bright amber
+                        cream: '#FFFBEB', // Light cream background
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                    <svg class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                        <polygon points="50,0 100,0 50,100 0,100" />
+                    </svg>
+                    <div class="pt-10 mx-auto max-w-7xl px-4 sm:pt-12 sm:px-6 md:pt-16 lg:pt-20 lg:px-8 xl:pt-28">
+                        <div class="sm:text-center lg:text-left">
+                            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                                <span class="block font-serif xl:inline">Handmade with Heart in</span>
+                                <span class="block text-primary xl:inline">KwaZulu-Natal</span>
+                            </h1>
+                            <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                Discover the artistry of Mvelase Pinafore Collection. Our aprons combine traditional craftsmanship with modern utility, perfect for the kitchen, garden, or workshop.
+                            </p>
+                            <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                                <div class="rounded-md shadow">
+                                    <a href="shop.html" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-amber-800 md:py-4 md:text-lg md:px-10 transition-colors">
+                                        Shop Now
+                                    </a>
+                                </div>
+                                <div class="mt-3 sm:mt-0 sm:ml-3">
+                                    <a href="about.html" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-amber-100 hover:bg-amber-200 md:py-4 md:text-lg md:px-10 transition-colors">
+                                        Our Story
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+                <div class="h-56 w-full bg-amber-50 flex items-center justify-center sm:h-72 md:h-96 lg:w-full lg:h-full">
+                    <i data-lucide="chef-hat" class="w-32 h-32 text-primary opacity-20"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="py-12 bg-cream">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-serif font-bold text-gray-900">Featured Collections</h2>
+                    <p class="mt-4 text-lg text-gray-600">Choose from our signature designs crafted for durability and style.</p>
+                </div>
+
+                <div class="mt-10 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8 max-w-4xl mx-auto">
+                    <!-- Basic Apron -->
+                    <div class="group relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100">
+                        <div class="w-full min-h-80 bg-gray-100 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none flex items-center justify-center">
+                            <i data-lucide="shirt" class="w-24 h-24 text-gray-400"></i>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-700">
+                                    <a href="shop.html">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        Basic Apron
+                                    </a>
+                                </h3>
+                                <p class="mt-1 text-sm text-gray-500">Classic design, high durability</p>
+                            </div>
+                            <p class="text-sm font-bold text-primary">R80</p>
+                        </div>
+                    </div>
+
+                    <!-- Premium Apron -->
+                    <div class="group relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100">
+                        <div class="w-full min-h-80 bg-gray-100 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-24 h-24 text-primary opacity-50"></i>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-700">
+                                    <a href="shop.html">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        Premium Apron
+                                    </a>
+                                </h3>
+                                <p class="mt-1 text-sm text-gray-500">Enhanced comfort & premium fabric</p>
+                            </div>
+                            <p class="text-sm font-bold text-primary">R150</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-serif font-bold text-gray-900">Our Story</h1>
+            <div class="mt-2 h-1 w-20 bg-primary mx-auto"></div>
+        </div>
+        
+        <div class="prose prose-amber lg:prose-lg mx-auto text-gray-600 space-y-6">
+            <p class="text-xl italic text-gray-800 leading-relaxed text-center">"Bringing the heritage of KwaZulu-Natal to your home, one stitch at a time."</p>
+            
+            <p>Mvelase Pinafore Collection started in the heart of KwaZulu-Natal with a simple mission: to create high-quality, handmade aprons that celebrate our local craftsmanship. What began as a small project serving our local community has grown into a dedicated business committed to excellence and durability.</p>
+            
+            <p>Our aprons are more than just protective wear; they are a tribute to the hardworking men and women of South Africa. Each piece is carefully hand-stitched using premium locally-sourced fabrics, ensuring that every customer receives a product that is both beautiful and built to last.</p>
+            
+            <div class="bg-amber-50 p-8 rounded-xl border-l-4 border-primary my-12">
+                <h3 class="text-xl font-bold text-primary mb-2">Supporting Local SMEs</h3>
+                <p>By choosing Mvelase, you are directly supporting a small business in KZN. We believe in the power of local entrepreneurship to transform communities and preserve traditional skills. Your support helps us provide jobs and maintain the high standards of South African handmade goods.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center py-8">
+                <div>
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-amber-100">
+                        <i data-lucide="heart" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">Handmade</h4>
+                    <p class="text-sm">Crafted with care and precision</p>
+                </div>
+                <div>
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-amber-100">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">KZN Based</h4>
+                    <p class="text-sm">Proudly South African roots</p>
+                </div>
+                <div>
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-amber-100">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">Durable</h4>
+                    <p class="text-sm">Quality that stands the test of time</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>

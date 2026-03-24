@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Mvelase Pinafore Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B45309',
+                        cream: '#FFFBEB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans text-gray-900 min-h-screen flex flex-col">
+    <div id="nav-placeholder"></div>
+
+    <main class="flex-grow flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full">
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-serif font-bold text-gray-900">Track Your Order</h1>
+                <p class="mt-4 text-gray-600">Enter your Order ID to see your order status.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <form id="track-form" class="space-y-4">
+                    <div>
+                        <label for="order-id" class="block text-sm font-medium text-gray-700">Order ID</label>
+                        <input type="text" id="order-id-input" required placeholder="e.g. MVE-12345" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm p-3 border">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-primary hover:bg-amber-800 focus:outline-none font-medium">
+                        Track Order
+                    </button>
+                </form>
+
+                <div id="tracking-result" class="mt-8 hidden border-t pt-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm font-medium text-gray-500">Status</span>
+                        <span id="status-badge" class="px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wide">Processing</span>
+                    </div>
+                    <div class="relative">
+                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-100">
+                            <div id="status-progress" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width: 33%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>Processing</span>
+                            <span>Shipped</span>
+                            <span>Delivered</span>
+                        </div>
+                    </div>
+                    <div id="tracking-details" class="mt-6 text-sm text-gray-600 space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="assets/js/shared.js"></script>
+    <script>
+        document.getElementById('track-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('order-id-input').value.toUpperCase();
+            const orders = getOrders();
+            const order = orders.find(o => o.id === id);
+
+            const resultDiv = document.getElementById('tracking-result');
+            const detailsDiv = document.getElementById('tracking-details');
+            const badge = document.getElementById('status-badge');
+            const progress = document.getElementById('status-progress');
+
+            if (order) {
+                resultDiv.classList.remove('hidden');
+                badge.innerText = order.status;
+                
+                if (order.status === 'Processing') {
+                    badge.className = 'px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wide bg-blue-100 text-blue-800';
+                    progress.style.width = '33%';
+                } else if (order.status === 'Shipped') {
+                    badge.className = 'px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wide bg-amber-100 text-amber-800';
+                    progress.style.width = '66%';
+                } else {
+                    badge.className = 'px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wide bg-green-100 text-green-800';
+                    progress.style.width = '100%';
+                }
+
+                detailsDiv.innerHTML = `
+                    <p><strong>Customer:</strong> ${order.customer.name}</p>
+                    <p><strong>Order Date:</strong> ${order.date}</p>
+                    <p><strong>Items:</strong> ${order.items.map(i => `${i.qty}x ${i.name}`).join(', ')}</p>
+                    <p><strong>Total:</strong> ${order.total}</p>
+                `;
+            } else {
+                alert('Order not found. Please check the ID.');
+                resultDiv.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
